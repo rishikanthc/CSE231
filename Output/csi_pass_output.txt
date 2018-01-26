@@ -1,0 +1,13 @@
+Hello: __cxx_global_var_init
+call
+call
+ret
+Hello: main
+alloca
+store
+call
+call
+ret
+Hello: _GLOBAL__sub_I_HelloWorld.cpp
+call
+ret
