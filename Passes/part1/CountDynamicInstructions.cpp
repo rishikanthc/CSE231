@@ -69,11 +69,9 @@ struct cse231_cdi: public FunctionPass {
 			args.push_back(builder.CreateInBoundsGEP(opcodes_global, ranges));
 			args.push_back(builder.CreateInBoundsGEP(opcounts_global, ranges));
 
-			errs() << "func call" << '\n';
 			builder.CreateCall(updateStats, args);		
 
 			if ((string) B.getTerminator()->getOpcodeName() == "ret") {
-				errs() << "Exiting function" << '\n';
 				builder.SetInsertPoint(B.getTerminator());
 				builder.CreateCall(printStats);
 			}

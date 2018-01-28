@@ -8,6 +8,8 @@ LLVM_SO=/LLVM_ROOT/build/lib
 LIB_DIR=/lib231
 # path to the test directory
 TEST_DIR=.
+#path to solutions
+SOL_DIR=/solution
 
 $LLVM_BIN/clang -c -O0 $TEST_DIR/test1.c -emit-llvm -S -o /tmp/test1-c.ll
 $LLVM_BIN/clang++ -c -O0 $TEST_DIR/test1.cpp -emit-llvm -S -o /tmp/test1.ll
@@ -27,3 +29,16 @@ $LLVM_BIN/clang++ /tmp/lib231.ll /tmp/test1-bb.ll /tmp/test1-main.ll -o /tmp/bb_
 /tmp/cdi_test1 2> /tmp/cdi.result
 /tmp/bb_test1 2> /tmp/bb.result
 
+
+$SOL_DIR/opt -cse231-csi < /tmp/test1-c.ll > /dev/null 2> /tmp/csi_sol.result
+$SOL_DIR/opt -cse231-cdi < /tmp/test1.ll -o /tmp/test1-sol-cdi.bc
+$SOL_DIR/opt -cse231-bb < /tmp/test1.ll -o /tmp/test1-sol-bb.bc
+
+$LLVM_BIN/llvm-dis /tmp/test1-sol-cdi.bc
+$LLVM_BIN/llvm-dis /tmp/test1-sol-bb.bc
+
+$LLVM_BIN/clang++ /tmp/lib231.ll /tmp/test1-sol-cdi.ll /tmp/test1-main.ll -o /tmp/cdi_sol_test1
+$LLVM_BIN/clang++ /tmp/lib231.ll /tmp/test1-sol-bb.ll /tmp/test1-main.ll -o /tmp/bb_sol_test1
+
+/tmp/cdi_sol_test1 2> /tmp/cdi_sol.result
+/tmp/bb_sol_test1 2> /tmp/bb_sol.result

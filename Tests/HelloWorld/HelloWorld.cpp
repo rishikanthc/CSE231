@@ -5,6 +5,6 @@ int main () {
 	cout << "Hello World" <<endl;
 	int a = 1;
 	if (a)
-		cout << "hhhh";
+		cout << "hhhh" <<endl;
 	return 0;
 }

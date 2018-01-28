@@ -16,8 +16,7 @@ struct cse231_csi: public FunctionPass {
 
   bool runOnFunction(Function &F) override {
     map<string, int> count;
-    errs() << "Hello: ";
-    errs().write_escaped(F.getName()) << '\n';
+
     for (inst_iterator I = inst_begin(F), E = inst_end(F); I != E; ++I) {
 	    int temp;
 	    string name = I->getOpcodeName();
